@@ -81,8 +81,26 @@ class InvoiceTest extends TestCase
                 new \DateTime(),
                 new \DateTime('tomorrow')
             )
-        ]), new TotalPriceCalculator());
+        ]));
+        $invoice->setCalculator(new TotalPriceCalculator());
         self::assertEquals(128, $invoice->getTotalPrice());
+    }
+
+    /**
+     *
+     */
+    public function testInvoiceCalculatorDidntSetException(): void
+    {
+        $this->expectException(\BadMethodCallException::class);
+        $invoice = Invoice::create(new Order(
+            new Id('test'),
+            new Customer(new Id(Uuid::uuid4()), 'test', new Address('test', 'test', 'test', 123)),
+            new ProductsCollection(),
+            new \DateTime(),
+            new \DateTime('yesterday'),
+            new Status(Status::STATUS_OPEN)
+        ), new ProductsCollection([]));
+        $invoice->getTotalPrice();
     }
 
     /**

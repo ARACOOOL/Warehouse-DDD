@@ -63,8 +63,7 @@ class Invoice implements Entity
         ProductsCollection $products,
         int $status,
         \DateTime $createdAt,
-        \DateTime $shippedAt = null,
-        TotalPriceCalculatorInterface $calculator
+        \DateTime $shippedAt = null
     ) {
         $this->id = $id;
         $this->order = $order;
@@ -76,20 +75,17 @@ class Invoice implements Entity
         $this->status = $status;
         $this->createdAt = $createdAt;
         $this->shippedAt = $shippedAt;
-        $this->calculator = $calculator;
     }
 
     /**
      * @param Order $order
      * @param ProductsCollection $products
-     * @param TotalPriceCalculatorInterface $calculator
      * @return Invoice
      * @throws \InvalidArgumentException
      */
     public static function create(
         Order $order,
-        ProductsCollection $products,
-        TotalPriceCalculatorInterface $calculator
+        ProductsCollection $products
     ): Invoice {
         return new self(
             new Id(Uuid::uuid4()),
@@ -97,8 +93,7 @@ class Invoice implements Entity
             $products,
             self::STATUS_OPENED,
             new \DateTime(),
-            null,
-            $calculator
+            null
         );
     }
 
@@ -168,9 +163,13 @@ class Invoice implements Entity
 
     /**
      * @return int
+     * @throws \BadMethodCallException
      */
     public function getTotalPrice(): int
     {
+        if(null === $this->calculator) {
+            throw new \BadMethodCallException('Total calculator didn\'t set');
+        }
         return $this->calculator->calculate($this->getProducts());
     }
 
@@ -188,5 +187,13 @@ class Invoice implements Entity
     public function getTotalCount(): int
     {
         return $this->getProducts()->totalCount();
+    }
+
+    /**
+     * @param TotalPriceCalculatorInterface $calculator
+     */
+    public function setCalculator(TotalPriceCalculatorInterface $calculator): void
+    {
+        $this->calculator = $calculator;
     }
 }
