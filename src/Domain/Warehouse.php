@@ -2,7 +2,6 @@
 
 namespace Warehouse\Domain;
 
-use Warehouse\Domain\Calculator\TotalPriceCalculator;
 use Warehouse\Domain\Collection\ProductsCollection;
 use Warehouse\Domain\Entity\Customer;
 use Warehouse\Domain\Entity\Invoice;
@@ -10,9 +9,11 @@ use Warehouse\Domain\Entity\Order;
 use Warehouse\Domain\Entity\Product;
 use Warehouse\Domain\Event\EventsManagerInterface;
 use Warehouse\Domain\Event\OrderShipped;
+use Warehouse\Domain\Event\OutgoingPurchaseEvent;
 use Warehouse\Domain\Event\Product\ProductIsNotAvailableEvent;
 use Warehouse\Domain\Event\ReturnProductsEvent;
 use Warehouse\Domain\Repository\ProductsRepositoryInterface;
+use Warehouse\Domain\Repository\PurchasesRepositoryInterface;
 
 /**
  * Class Warehouse
@@ -28,16 +29,25 @@ final class Warehouse
      * @var ProductsRepositoryInterface
      */
     private $productRepository;
+    /**
+     * @var PurchasesRepositoryInterface
+     */
+    private $purchasesRepository;
 
     /**
      * Warehouse constructor.
      * @param ProductsRepositoryInterface $productsRepository
+     * @param PurchasesRepositoryInterface $purchasesRepository
      * @param EventsManagerInterface $eventsManager
      */
-    public function __construct(ProductsRepositoryInterface $productsRepository, EventsManagerInterface $eventsManager)
-    {
+    public function __construct(
+        ProductsRepositoryInterface $productsRepository,
+        PurchasesRepositoryInterface $purchasesRepository,
+        EventsManagerInterface $eventsManager
+    ) {
         $this->productRepository = $productsRepository;
         $this->eventManager = $eventsManager;
+        $this->purchasesRepository = $purchasesRepository;
     }
 
     /**
@@ -72,7 +82,8 @@ final class Warehouse
      */
     public function returnProductsToSupplier(ProductsContainer $container): void
     {
-        $this->eventManager->dispatch(ReturnProductsEvent::getName(), new ReturnProductsEvent($container->getProducts()));
+        $this->eventManager->dispatch(ReturnProductsEvent::getName(),
+            new ReturnProductsEvent($container->getProducts()));
     }
 
     /**
@@ -118,7 +129,7 @@ final class Warehouse
      */
     private function createInvoice(Order $order, array $availableProducts): Invoice
     {
-        return Invoice::create($order, new ProductsCollection($availableProducts), new TotalPriceCalculator());
+        return Invoice::create($order, new ProductsCollection($availableProducts));
     }
 
     /**
@@ -163,5 +174,15 @@ final class Warehouse
     public function getProductCount(ProductId $id): int
     {
         return $this->productRepository->getProductCount($id);
+    }
+
+    /**
+     * @param Invoice $invoice
+     * @param Money $money
+     */
+    public function receiveMoney(Invoice $invoice, Money $money): void
+    {
+        $this->purchasesRepository->outgoing($invoice);
+        $this->eventManager->dispatch(OutgoingPurchaseEvent::getName(), new OutgoingPurchaseEvent($invoice));
     }
 }

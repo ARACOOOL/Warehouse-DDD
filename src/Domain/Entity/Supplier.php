@@ -12,10 +12,38 @@ use Warehouse\Domain\Id;
 class Supplier implements Entity
 {
     /**
+     * @var Id
+     */
+    private $id;
+    /**
+     * @var string
+     */
+    private $name;
+
+    /**
+     * Supplier constructor.
+     * @param Id $id
+     * @param string $name
+     */
+    public function __construct(Id $id, string $name)
+    {
+        $this->id = $id;
+        $this->name = $name;
+    }
+
+    /**
      * @return Id
      */
     public function getID(): Id
     {
-        // TODO: Implement getID() method.
+        return $this->id;
+    }
+
+    /**
+     * @return string
+     */
+    public function getName(): string
+    {
+        return $this->name;
     }
 }

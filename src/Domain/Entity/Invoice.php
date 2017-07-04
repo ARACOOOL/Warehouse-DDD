@@ -8,6 +8,7 @@ use Warehouse\Domain\Calculator\TotalPriceCalculatorInterface;
 use Warehouse\Domain\Collection\ProductsCollection;
 use Warehouse\Domain\Contract\Entity;
 use Warehouse\Domain\Id;
+use Warehouse\Domain\Money;
 
 /**
  * Class Invoice
@@ -54,7 +55,7 @@ class Invoice implements Entity
      * @param int $status
      * @param \DateTime $createdAt
      * @param \DateTime $shippedAt
-     * @param \Warehouse\Domain\Calculator\TotalPriceCalculatorInterface $calculator
+     * @internal param TotalPriceCalculatorInterface $calculator
      * @throws \InvalidArgumentException
      */
     public function __construct(
@@ -162,15 +163,15 @@ class Invoice implements Entity
     }
 
     /**
-     * @return int
+     * @return Money
      * @throws \BadMethodCallException
      */
-    public function getTotalPrice(): int
+    public function getTotalPrice(): Money
     {
         if(null === $this->calculator) {
             throw new \BadMethodCallException('Total calculator didn\'t set');
         }
-        return $this->calculator->calculate($this->getProducts());
+        return Money::USD($this->calculator->calculate($this->getProducts()));
     }
 
     /**

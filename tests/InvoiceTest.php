@@ -12,6 +12,7 @@ use Warehouse\Domain\Entity\Invoice;
 use Warehouse\Domain\Entity\Order;
 use Warehouse\Domain\Entity\Product;
 use Warehouse\Domain\Id;
+use Warehouse\Domain\Money;
 use Warehouse\Domain\ProductId;
 use Warehouse\Domain\Status;
 
@@ -83,7 +84,7 @@ class InvoiceTest extends TestCase
             )
         ]));
         $invoice->setCalculator(new TotalPriceCalculator());
-        self::assertEquals(128, $invoice->getTotalPrice());
+        self::assertInstanceOf(Money::class, $invoice->getTotalPrice());
     }
 
     /**
