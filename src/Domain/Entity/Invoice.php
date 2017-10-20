@@ -66,13 +66,13 @@ class Invoice implements Entity
         \DateTime $createdAt,
         \DateTime $shippedAt = null
     ) {
-        $this->id = $id;
-        $this->order = $order;
-        $this->products = $products;
-
         if ($status != self::STATUS_OPENED && $status != self::STATUS_SHIPPED) {
             throw new \InvalidArgumentException('Invalid status of invoice');
         }
+        
+        $this->id = $id;
+        $this->order = $order;
+        $this->products = $products;
         $this->status = $status;
         $this->createdAt = $createdAt;
         $this->shippedAt = $shippedAt;
