@@ -43,17 +43,9 @@ final class Address
     /**
      * @return string
      */
-    public function getCountry(): string
+    public function __toString()
     {
-        return $this->country;
-    }
-
-    /**
-     * @return string
-     */
-    public function getCity(): string
-    {
-        return $this->city;
+        return $this->getAddress() . ' ' . $this->getCity() . ' ' . $this->getZip() . ' ' . $this->getCountry();
     }
 
     /**
@@ -62,6 +54,14 @@ final class Address
     public function getAddress(): string
     {
         return $this->address;
+    }
+
+    /**
+     * @return string
+     */
+    public function getCity(): string
+    {
+        return $this->city;
     }
 
     /**
@@ -75,8 +75,8 @@ final class Address
     /**
      * @return string
      */
-    public function __toString()
+    public function getCountry(): string
     {
-        return $this->getAddress() . ' ' . $this->getCity() . ' ' . $this->getZip() . ' ' . $this->getCountry();
+        return $this->country;
     }
 }

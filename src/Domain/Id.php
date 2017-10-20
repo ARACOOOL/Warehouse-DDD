@@ -2,8 +2,6 @@
 
 namespace Warehouse\Domain;
 
-use Webmozart\Assert\Assert;
-
 /**
  * Class Id
  * @package Warehouse\Domain
