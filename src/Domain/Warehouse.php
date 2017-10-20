@@ -56,13 +56,13 @@ final class Warehouse
      */
     public function acceptContainer(ProductsContainer $container): void
     {
-        $this->disassembleProducts($container->getProducts());
+        $this->placeProducts($container->getProducts());
     }
 
     /**
      * @param \Warehouse\Domain\Product\Product[] $products
      */
-    private function disassembleProducts(array $products): void
+    private function placeProducts(array $products): void
     {
         $returnProducts = [];
         foreach ($products as $product) {
@@ -147,7 +147,7 @@ final class Warehouse
      */
     public function acceptReturnedProducts(array $products): void
     {
-        $this->disassembleProducts($products);
+        $this->placeProducts($products);
         $this->eventManager->dispatch(ReturnProductsEvent::getName(), new ReturnProductsEvent($products));
     }
 
