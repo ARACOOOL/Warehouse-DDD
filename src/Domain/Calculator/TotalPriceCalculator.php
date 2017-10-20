@@ -2,7 +2,7 @@
 
 namespace Warehouse\Domain\Calculator;
 
-use Warehouse\Domain\Collection\ProductsCollection;
+use Warehouse\Domain\Entity\Product;
 
 /**
  * Class TotalPriceCalculator
@@ -11,11 +11,11 @@ use Warehouse\Domain\Collection\ProductsCollection;
 class TotalPriceCalculator implements TotalPriceCalculatorInterface
 {
     /**
-     * @param ProductsCollection $products
+     * @param Product[] $products
      * @return int
      * @internal param Invoice $invoice
      */
-    public function calculate(ProductsCollection $products): int
+    public function calculate(array $products): int
     {
         $totalPrice = 0;
         foreach ($products as $key => $product) {

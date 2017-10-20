@@ -2,8 +2,6 @@
 
 namespace Warehouse\Domain;
 
-use Warehouse\Domain\Collection\ProductsCollection;
-
 /**
  * Class ProductsContainer
  * @package Warehouse\Domain
@@ -11,23 +9,23 @@ use Warehouse\Domain\Collection\ProductsCollection;
 final class ProductsContainer
 {
     /**
-     * @var ProductsCollection
+     * @var array
      */
     private $products;
 
     /**
      * ProductsContainer constructor.
-     * @param ProductsCollection $products
+     * @param array $products
      */
-    public function __construct(ProductsCollection $products)
+    public function __construct(array $products)
     {
         $this->products = $products;
     }
 
     /**
-     * @return ProductsCollection
+     * @return array
      */
-    public function getProducts(): ProductsCollection
+    public function getProducts(): array
     {
         return $this->products;
     }

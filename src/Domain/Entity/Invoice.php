@@ -5,7 +5,6 @@ namespace Warehouse\Domain\Entity;
 use Ramsey\Uuid\Uuid;
 use Warehouse\Domain\Address;
 use Warehouse\Domain\Calculator\TotalPriceCalculatorInterface;
-use Warehouse\Domain\Collection\ProductsCollection;
 use Warehouse\Domain\Contract\Entity;
 use Warehouse\Domain\Id;
 use Warehouse\Domain\Money;
@@ -51,7 +50,7 @@ class Invoice implements Entity
      * Invoice constructor.
      * @param Id $id
      * @param Order $order
-     * @param ProductsCollection $products
+     * @param Product[] $products
      * @param int $status
      * @param \DateTime $createdAt
      * @param \DateTime $shippedAt
@@ -61,7 +60,7 @@ class Invoice implements Entity
     public function __construct(
         Id $id,
         Order $order,
-        ProductsCollection $products,
+        array $products,
         int $status,
         \DateTime $createdAt,
         \DateTime $shippedAt = null
@@ -80,13 +79,13 @@ class Invoice implements Entity
 
     /**
      * @param Order $order
-     * @param ProductsCollection $products
+     * @param Product[] $products
      * @return Invoice
      * @throws \InvalidArgumentException
      */
     public static function create(
         Order $order,
-        ProductsCollection $products
+        array $products
     ): Invoice {
         return new self(
             new Id(Uuid::uuid4()),
@@ -168,16 +167,16 @@ class Invoice implements Entity
      */
     public function getTotalPrice(): Money
     {
-        if(null === $this->calculator) {
+        if (null === $this->calculator) {
             throw new \BadMethodCallException('Total calculator didn\'t set');
         }
         return Money::USD($this->calculator->calculate($this->getProducts()));
     }
 
     /**
-     * @return ProductsCollection
+     * @return array
      */
-    public function getProducts(): ProductsCollection
+    public function getProducts(): array
     {
         return $this->products;
     }
@@ -187,7 +186,7 @@ class Invoice implements Entity
      */
     public function getTotalCount(): int
     {
-        return $this->getProducts()->totalCount();
+        return count($this->getProducts());
     }
 
     /**

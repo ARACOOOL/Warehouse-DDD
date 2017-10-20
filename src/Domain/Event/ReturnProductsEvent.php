@@ -2,8 +2,7 @@
 
 namespace Warehouse\Domain\Event;
 
-use Warehouse\Domain\Collection\ProductsCollection;
-use Warehouse\Domain\ProductsContainer;
+use Warehouse\Domain\Entity\Product;
 
 /**
  * Class ReturnProductsEvent
@@ -12,15 +11,15 @@ use Warehouse\Domain\ProductsContainer;
 class ReturnProductsEvent extends Event
 {
     /**
-     * @var ProductsContainer
+     * @var array
      */
     private $products;
 
     /**
      * ReturnProductsEvent constructor.
-     * @param ProductsCollection $products
+     * @param Product[] $products
      */
-    public function __construct(ProductsCollection $products)
+    public function __construct(array $products)
     {
         $this->products = $products;
     }
@@ -34,9 +33,9 @@ class ReturnProductsEvent extends Event
     }
 
     /**
-     * @return ProductsCollection
+     * @return array
      */
-    public function getProducts(): ProductsCollection
+    public function getProducts(): array
     {
         return $this->products;
     }

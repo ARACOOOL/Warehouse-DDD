@@ -4,7 +4,6 @@ namespace Warehouse\Domain\Entity;
 
 use Ramsey\Uuid\Uuid;
 use Warehouse\Domain\Address;
-use Warehouse\Domain\Collection\ProductsCollection;
 use Warehouse\Domain\Contract\Entity;
 use Warehouse\Domain\Id;
 use Warehouse\Domain\Status;
@@ -51,7 +50,7 @@ class Customer implements Entity
         return new Order(
             new Id(Uuid::uuid4()),
             $this,
-            new ProductsCollection($products),
+            $products,
             new \DateTime(),
             new \DateTime(),
             new Status(Status::STATUS_OPEN)

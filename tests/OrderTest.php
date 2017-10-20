@@ -5,7 +5,6 @@ namespace tests;
 use PHPUnit\Framework\TestCase;
 use Ramsey\Uuid\Uuid;
 use Warehouse\Domain\Address;
-use Warehouse\Domain\Collection\ProductsCollection;
 use Warehouse\Domain\Entity\Customer;
 use Warehouse\Domain\Entity\Order;
 use Warehouse\Domain\Entity\Product;
@@ -23,7 +22,7 @@ class OrderTest extends TestCase
         $order = new Order(
             new Id('test'),
             new Customer(new Id(Uuid::uuid4()), 'test', new Address('test', 'test', 'test', 123)),
-            new ProductsCollection(),
+            [],
             new \DateTime(),
             new \DateTime(),
             new Status(Status::STATUS_OPEN)
@@ -34,7 +33,7 @@ class OrderTest extends TestCase
         $order = new Order(
             new Id('test'),
             new Customer(new Id(Uuid::uuid4()), 'test', new Address('test', 'test', 'test', 123)),
-            new ProductsCollection(),
+            [],
             new \DateTime(),
             new \DateTime(),
             new Status(Status::STATUS_CLOSE)
@@ -52,7 +51,7 @@ class OrderTest extends TestCase
         new Order(
             new Id('test'),
             new Customer(new Id(Uuid::uuid4()), 'test', new Address('test', 'test', 'test', 123)),
-            new ProductsCollection(),
+            [],
             new \DateTime(),
             new \DateTime(),
             new Status(3)
@@ -67,7 +66,7 @@ class OrderTest extends TestCase
         $order = new Order(
             new Id('test'),
             new Customer(new Id(Uuid::uuid4()), 'test', new Address('test', 'test', 'test', 123)),
-            new ProductsCollection(),
+            [],
             new \DateTime(),
             new \DateTime(),
             new Status(Status::STATUS_OPEN)
@@ -88,7 +87,7 @@ class OrderTest extends TestCase
         $order = new Order(
             new Id('test'),
             new Customer(new Id(Uuid::uuid4()), 'test', new Address('test', 'test', 'test', 123)),
-            new ProductsCollection(),
+            [],
             new \DateTime(),
             new \DateTime(),
             new Status(Status::STATUS_CLOSE)
@@ -105,7 +104,7 @@ class OrderTest extends TestCase
         $order = new Order(
             new Id('test'),
             new Customer(new Id(Uuid::uuid4()), 'test', new Address('test', 'test', 'test', 123)),
-            new ProductsCollection(),
+            [],
             new \DateTime(),
             new \DateTime(),
             new Status(Status::STATUS_CLOSE)
@@ -131,7 +130,7 @@ class OrderTest extends TestCase
         $order = new Order(
             new Id('test'),
             new Customer(new Id(Uuid::uuid4()), 'test', new Address('test', 'test', 'test', 123)),
-            new ProductsCollection(),
+            [],
             new \DateTime(),
             new \DateTime('yesterday'),
             new Status(Status::STATUS_OPEN)
@@ -152,7 +151,7 @@ class OrderTest extends TestCase
         $order = new Order(
             new Id('test'),
             new Customer(new Id(Uuid::uuid4()), 'test', new Address('test', 'test', 'test', 123)),
-            new ProductsCollection(),
+            [],
             new \DateTime(),
             new \DateTime('yesterday'),
             new Status(Status::STATUS_OPEN)
@@ -176,9 +175,9 @@ class OrderTest extends TestCase
             new \DateTime(),
             new \DateTime('tomorrow')
         ));
-        self::assertEquals(2, $order->getProducts()->totalCount());
+        self::assertCount(2, $order->getProducts());
 
         $order->removeProduct($product);
-        self::assertEquals(1, $order->getProducts()->totalCount());
+        self::assertCount(1, $order->getProducts());
     }
 }

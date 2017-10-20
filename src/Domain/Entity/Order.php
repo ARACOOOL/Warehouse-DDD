@@ -34,7 +34,7 @@ class Order implements Entity
      */
     private $status;
     /**
-     * @var ProductsCollection
+     * @var Product[]
      */
     private $products;
 
@@ -42,7 +42,7 @@ class Order implements Entity
      * Order constructor.
      * @param Id $id
      * @param Customer $customer
-     * @param ProductsCollection $products
+     * @param Product[] $products
      * @param \DateTime $createdAt
      * @param \DateTime $updatedAt
      * @param Status $status
@@ -50,7 +50,7 @@ class Order implements Entity
     public function __construct(
         Id $id,
         Customer $customer,
-        ProductsCollection $products,
+        array $products,
         \DateTime $createdAt,
         \DateTime $updatedAt,
         Status $status
@@ -96,9 +96,9 @@ class Order implements Entity
     }
 
     /**
-     * @return ProductsCollection
+     * @return array
      */
-    public function getProducts(): ProductsCollection
+    public function getProducts(): array
     {
         return $this->products;
     }
@@ -114,7 +114,7 @@ class Order implements Entity
             throw new \DomainException('Can\'t change order, it was closed');
         }
 
-        $this->products->addProduct($product);
+        $this->products[] = $product;
         $this->updatedAt = new \DateTime();
     }
 
@@ -144,6 +144,10 @@ class Order implements Entity
      */
     public function removeProduct(Product $product): void
     {
-        $this->products->removeProduct($product);
+        foreach ($this->products as $key => $item) {
+            if ($item->getID() == $product->getID()) {
+                unset($this->products[$key]);
+            }
+        }
     }
 }

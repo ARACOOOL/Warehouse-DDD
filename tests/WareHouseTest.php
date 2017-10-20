@@ -63,7 +63,7 @@ class WareHouseTest extends TestCase
 
         $warehouse = new Warehouse($productRepository, $this->createMock(PurchasesRepositoryInterface::class),
             $eventManager);
-        $warehouse->acceptContainer(new ProductsContainer(new ProductsCollection([$product, $product2])));
+        $warehouse->acceptContainer(new ProductsContainer([$product, $product2]));
     }
 
     /**
@@ -99,7 +99,7 @@ class WareHouseTest extends TestCase
         );
 
         $warehouse->receiveMoney(
-            Invoice::create($this->createMock(Order::class), new ProductsCollection([])),
+            Invoice::create($this->createMock(Order::class), []),
             Money::USD(500)
         );
     }

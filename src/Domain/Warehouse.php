@@ -2,7 +2,6 @@
 
 namespace Warehouse\Domain;
 
-use Warehouse\Domain\Collection\ProductsCollection;
 use Warehouse\Domain\Entity\Customer;
 use Warehouse\Domain\Entity\Invoice;
 use Warehouse\Domain\Entity\Order;
@@ -59,9 +58,9 @@ final class Warehouse
     }
 
     /**
-     * @param ProductsCollection $products
+     * @param Product[] $products
      */
-    private function disassembleProducts(ProductsCollection $products): void
+    private function disassembleProducts(array $products): void
     {
         $returnProducts = [];
         foreach ($products as $product) {
@@ -73,7 +72,7 @@ final class Warehouse
         }
 
         if (count($returnProducts)) {
-            $this->returnProductsToSupplier(new ProductsContainer(new ProductsCollection($returnProducts)));
+            $this->returnProductsToSupplier(new ProductsContainer($returnProducts));
         }
     }
 
@@ -129,7 +128,7 @@ final class Warehouse
      */
     private function createInvoice(Order $order, array $availableProducts): Invoice
     {
-        return Invoice::create($order, new ProductsCollection($availableProducts));
+        return Invoice::create($order, $availableProducts);
     }
 
     /**
@@ -143,9 +142,9 @@ final class Warehouse
     }
 
     /**
-     * @param ProductsCollection $products
+     * @param Product[] $products
      */
-    public function acceptReturnedProducts(ProductsCollection $products): void
+    public function acceptReturnedProducts(array $products): void
     {
         $this->disassembleProducts($products);
         $this->eventManager->dispatch(ReturnProductsEvent::getName(), new ReturnProductsEvent($products));

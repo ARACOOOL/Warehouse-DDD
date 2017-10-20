@@ -33,7 +33,7 @@ class InvoiceTest extends TestCase
         new Invoice(
             new Id('test'),
             $this->createMock(Order::class),
-            new ProductsCollection(),
+            [],
             4,
             new \DateTime(),
             new \DateTime(),
@@ -46,8 +46,9 @@ class InvoiceTest extends TestCase
      */
     public function testInvoiceCreation(): void
     {
-        $invoice = Invoice::create($this->createMock(Order::class), new ProductsCollection(),
-            new TotalPriceCalculator());
+        $invoice = Invoice::create($this->createMock(Order::class), []);
+        $invoice->setCalculator(new TotalPriceCalculator());
+
         self::assertInstanceOf(Invoice::class, $invoice);
         self::assertEquals(Invoice::STATUS_OPENED, $invoice->getStatus());
     }
@@ -60,12 +61,12 @@ class InvoiceTest extends TestCase
         $order = new Order(
             new Id('test'),
             new Customer(new Id(Uuid::uuid4()), 'test', new Address('test', 'test', 'test', 123)),
-            new ProductsCollection(),
+            [],
             new \DateTime(),
             new \DateTime('yesterday'),
             new Status(Status::STATUS_OPEN)
         );
-        $invoice = Invoice::create($order, new ProductsCollection([
+        $invoice = Invoice::create($order, [
             new Product(
                 new ProductId(Uuid::uuid4()),
                 'test title',
@@ -82,7 +83,7 @@ class InvoiceTest extends TestCase
                 new \DateTime(),
                 new \DateTime('tomorrow')
             )
-        ]));
+        ]);
         $invoice->setCalculator(new TotalPriceCalculator());
         self::assertInstanceOf(Money::class, $invoice->getTotalPrice());
     }
@@ -96,11 +97,11 @@ class InvoiceTest extends TestCase
         $invoice = Invoice::create(new Order(
             new Id('test'),
             new Customer(new Id(Uuid::uuid4()), 'test', new Address('test', 'test', 'test', 123)),
-            new ProductsCollection(),
+            [],
             new \DateTime(),
             new \DateTime('yesterday'),
             new Status(Status::STATUS_OPEN)
-        ), new ProductsCollection([]));
+        ), []);
         $invoice->getTotalPrice();
     }
 
@@ -112,12 +113,12 @@ class InvoiceTest extends TestCase
         $order = new Order(
             new Id('test'),
             new Customer(new Id(Uuid::uuid4()), 'test', new Address('test', 'test', 'test', 123)),
-            new ProductsCollection(),
+            [],
             new \DateTime(),
             new \DateTime('yesterday'),
             new Status(Status::STATUS_OPEN)
         );
-        $invoice = Invoice::create($order, new ProductsCollection([
+        $invoice = Invoice::create($order, [
             new Product(
                 new ProductId(Uuid::uuid4()),
                 'test title',
@@ -134,7 +135,9 @@ class InvoiceTest extends TestCase
                 new \DateTime(),
                 new \DateTime('tomorrow')
             )
-        ]), new TotalPriceCalculator());
+        ]);
+        $invoice->setCalculator(new TotalPriceCalculator());
+
         self::assertEquals(2, $invoice->getTotalCount());
     }
 }
