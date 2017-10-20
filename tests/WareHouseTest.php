@@ -4,7 +4,6 @@ namespace tests;
 
 use PHPUnit\Framework\TestCase;
 use Ramsey\Uuid\Uuid;
-use Warehouse\Domain\Collection\ProductsCollection;
 use Warehouse\Domain\Entity\Invoice;
 use Warehouse\Domain\Entity\Order;
 use Warehouse\Domain\Entity\Product;

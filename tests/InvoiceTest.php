@@ -6,7 +6,6 @@ use PHPUnit\Framework\TestCase;
 use Ramsey\Uuid\Uuid;
 use Warehouse\Domain\Address;
 use Warehouse\Domain\Calculator\TotalPriceCalculator;
-use Warehouse\Domain\Collection\ProductsCollection;
 use Warehouse\Domain\Entity\Customer;
 use Warehouse\Domain\Entity\Invoice;
 use Warehouse\Domain\Entity\Order;

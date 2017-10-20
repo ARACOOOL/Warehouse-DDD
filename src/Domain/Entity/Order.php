@@ -2,7 +2,6 @@
 
 namespace Warehouse\Domain\Entity;
 
-use Warehouse\Domain\Collection\ProductsCollection;
 use Warehouse\Domain\Contract\Entity;
 use Warehouse\Domain\Id;
 use Warehouse\Domain\Status;
