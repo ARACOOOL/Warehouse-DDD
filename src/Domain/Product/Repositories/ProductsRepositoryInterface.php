@@ -1,9 +1,10 @@
 <?php
 
-namespace Warehouse\Domain\Repository;
+namespace Warehouse\Domain\Product\Repositories;
 
 use Warehouse\Domain\Product\ObjectValues\ProductId;
 use Warehouse\Domain\Product\Product;
+use Warehouse\Domain\Repository\RepositoryInterface;
 
 /**
  * Interface ProductsRepositoryInterface
