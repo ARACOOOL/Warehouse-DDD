@@ -3,9 +3,9 @@
 namespace Warehouse\Domain\Entity;
 
 use Ramsey\Uuid\Uuid;
-use Warehouse\Domain\Address;
 use Warehouse\Domain\Calculator\TotalPriceCalculatorInterface;
 use Warehouse\Domain\Contract\Entity;
+use Warehouse\Domain\Customer\ObjectValues\Address;
 use Warehouse\Domain\Id;
 use Warehouse\Domain\Money;
 use Warehouse\Domain\Product\Product;

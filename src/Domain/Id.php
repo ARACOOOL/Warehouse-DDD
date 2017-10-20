@@ -8,6 +8,9 @@ namespace Warehouse\Domain;
  */
 class Id
 {
+    /**
+     * @var string
+     */
     private $id;
 
     /**

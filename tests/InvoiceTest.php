@@ -4,9 +4,9 @@ namespace tests;
 
 use PHPUnit\Framework\TestCase;
 use Ramsey\Uuid\Uuid;
-use Warehouse\Domain\Address;
 use Warehouse\Domain\Calculator\TotalPriceCalculator;
-use Warehouse\Domain\Entity\Customer;
+use Warehouse\Domain\Customer\Customer;
+use Warehouse\Domain\Customer\ObjectValues\Address;
 use Warehouse\Domain\Entity\Invoice;
 use Warehouse\Domain\Entity\Order;
 use Warehouse\Domain\Id;

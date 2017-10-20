@@ -2,7 +2,7 @@
 
 namespace Warehouse\Domain;
 
-use Warehouse\Domain\Entity\Customer;
+use Warehouse\Domain\Customer\Customer;
 use Warehouse\Domain\Entity\Invoice;
 use Warehouse\Domain\Entity\Order;
 use Warehouse\Domain\Event\EventsManagerInterface;
@@ -152,7 +152,7 @@ final class Warehouse
     }
 
     /**
-     * @param Customer $customer
+     * @param \Warehouse\Domain\Customer\Customer $customer
      */
     public function registerCustomer(Customer $customer): void
     {

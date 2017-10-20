@@ -1,6 +1,6 @@
 <?php
 
-namespace Warehouse\Domain;
+namespace Warehouse\Domain\Customer\ObjectValues;
 
 /**
  * Class Address

@@ -1,10 +1,11 @@
 <?php
 
-namespace Warehouse\Domain\Entity;
+namespace Warehouse\Domain\Customer;
 
 use Ramsey\Uuid\Uuid;
-use Warehouse\Domain\Address;
 use Warehouse\Domain\Contract\Entity;
+use Warehouse\Domain\Customer\ObjectValues\Address;
+use Warehouse\Domain\Entity\Order;
 use Warehouse\Domain\Id;
 use Warehouse\Domain\Status;
 
