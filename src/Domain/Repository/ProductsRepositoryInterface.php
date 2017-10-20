@@ -2,8 +2,8 @@
 
 namespace Warehouse\Domain\Repository;
 
-use Warehouse\Domain\Entity\Product;
-use Warehouse\Domain\ProductId;
+use Warehouse\Domain\Product\ObjectValues\ProductId;
+use Warehouse\Domain\Product\Product;
 
 /**
  * Interface ProductsRepositoryInterface
@@ -12,7 +12,7 @@ use Warehouse\Domain\ProductId;
 interface ProductsRepositoryInterface extends RepositoryInterface
 {
     /**
-     * @param ProductId $id
+     * @param \Warehouse\Domain\Product\ObjectValues\ProductId $id
      */
     public function increment(ProductId $id): void;
 
@@ -22,7 +22,7 @@ interface ProductsRepositoryInterface extends RepositoryInterface
     public function decrement(ProductId $id): void;
 
     /**
-     * @param Product $product
+     * @param \Warehouse\Domain\Product\Product $product
      */
     public function new(Product $product): void;
 

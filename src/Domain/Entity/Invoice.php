@@ -8,6 +8,7 @@ use Warehouse\Domain\Calculator\TotalPriceCalculatorInterface;
 use Warehouse\Domain\Contract\Entity;
 use Warehouse\Domain\Id;
 use Warehouse\Domain\Money;
+use Warehouse\Domain\Product\Product;
 
 /**
  * Class Invoice

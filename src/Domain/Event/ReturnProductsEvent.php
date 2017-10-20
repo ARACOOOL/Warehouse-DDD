@@ -2,7 +2,7 @@
 
 namespace Warehouse\Domain\Event;
 
-use Warehouse\Domain\Entity\Product;
+use Warehouse\Domain\Product\Product;
 
 /**
  * Class ReturnProductsEvent
@@ -17,7 +17,7 @@ class ReturnProductsEvent extends Event
 
     /**
      * ReturnProductsEvent constructor.
-     * @param Product[] $products
+     * @param \Warehouse\Domain\Product\Product[] $products
      */
     public function __construct(array $products)
     {

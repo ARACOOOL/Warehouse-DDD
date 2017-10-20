@@ -2,8 +2,8 @@
 
 namespace Warehouse\Domain\Event\Product;
 
-use Warehouse\Domain\Entity\Product;
 use Warehouse\Domain\Event\Event;
+use Warehouse\Domain\Product\Product;
 
 /**
  * Class ProductEvent
@@ -12,13 +12,13 @@ use Warehouse\Domain\Event\Event;
 abstract class ProductEvent extends Event
 {
     /**
-     * @var Product
+     * @var \Warehouse\Domain\Product\Product
      */
     protected $product;
 
     /**
      * ProductIsNotAvailableEvent constructor.
-     * @param Product $product
+     * @param \Warehouse\Domain\Product\Product $product
      */
     public function __construct(Product $product)
     {

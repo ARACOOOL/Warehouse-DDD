@@ -7,9 +7,9 @@ use Ramsey\Uuid\Uuid;
 use Warehouse\Domain\Address;
 use Warehouse\Domain\Entity\Customer;
 use Warehouse\Domain\Entity\Order;
-use Warehouse\Domain\Entity\Product;
 use Warehouse\Domain\Id;
-use Warehouse\Domain\ProductId;
+use Warehouse\Domain\Product\ObjectValues\ProductId;
+use Warehouse\Domain\Product\Product;
 use Warehouse\Domain\Status;
 
 class OrderTest extends TestCase

@@ -5,12 +5,13 @@ namespace Warehouse\Domain;
 use Warehouse\Domain\Entity\Customer;
 use Warehouse\Domain\Entity\Invoice;
 use Warehouse\Domain\Entity\Order;
-use Warehouse\Domain\Entity\Product;
 use Warehouse\Domain\Event\EventsManagerInterface;
 use Warehouse\Domain\Event\OrderShipped;
 use Warehouse\Domain\Event\OutgoingPurchaseEvent;
 use Warehouse\Domain\Event\Product\ProductIsNotAvailableEvent;
 use Warehouse\Domain\Event\ReturnProductsEvent;
+use Warehouse\Domain\Product\ObjectValues\ProductId;
+use Warehouse\Domain\Product\Product;
 use Warehouse\Domain\Repository\ProductsRepositoryInterface;
 use Warehouse\Domain\Repository\PurchasesRepositoryInterface;
 
@@ -58,7 +59,7 @@ final class Warehouse
     }
 
     /**
-     * @param Product[] $products
+     * @param \Warehouse\Domain\Product\Product[] $products
      */
     private function disassembleProducts(array $products): void
     {
@@ -92,7 +93,7 @@ final class Warehouse
     public function acceptOrder(Order $order): void
     {
         $availableProducts = [];
-        /* @var $item Product */
+        /* @var $item \Warehouse\Domain\Product\Product */
         foreach ($order->getProducts() as $productId => $count) {
             if (!$this->isProductAvailable(new ProductId($productId))) {
                 $this->eventManager->dispatch(ProductIsNotAvailableEvent::getName(),

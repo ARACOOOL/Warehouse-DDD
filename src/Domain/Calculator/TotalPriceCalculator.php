@@ -2,7 +2,7 @@
 
 namespace Warehouse\Domain\Calculator;
 
-use Warehouse\Domain\Entity\Product;
+use Warehouse\Domain\Product\Product;
 
 /**
  * Class TotalPriceCalculator

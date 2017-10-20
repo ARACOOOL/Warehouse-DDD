@@ -2,7 +2,7 @@
 
 namespace Warehouse\Domain\Calculator;
 
-use Warehouse\Domain\Entity\Product;
+use Warehouse\Domain\Product\Product;
 
 /**
  * Interface TotalPriceCalculatorInterface
@@ -11,7 +11,7 @@ use Warehouse\Domain\Entity\Product;
 interface TotalPriceCalculatorInterface
 {
     /**
-     * @param Product[] $products
+     * @param \Warehouse\Domain\Product\Product[] $products
      * @return int
      * @internal param Invoice $invoice
      */

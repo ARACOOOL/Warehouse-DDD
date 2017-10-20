@@ -4,8 +4,8 @@ namespace tests;
 
 use PHPUnit\Framework\TestCase;
 use Ramsey\Uuid\Uuid;
-use Warehouse\Domain\Entity\Product;
-use Warehouse\Domain\ProductId;
+use Warehouse\Domain\Product\ObjectValues\ProductId;
+use Warehouse\Domain\Product\Product;
 
 /**
  * Class ProductTest

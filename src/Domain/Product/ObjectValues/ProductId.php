@@ -1,7 +1,8 @@
 <?php
 
-namespace Warehouse\Domain;
+namespace Warehouse\Domain\Product\ObjectValues;
 
+use Warehouse\Domain\Id;
 use Webmozart\Assert\Assert;
 
 /**

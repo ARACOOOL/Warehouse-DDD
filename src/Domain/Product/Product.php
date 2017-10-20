@@ -1,11 +1,10 @@
 <?php
 
-namespace Warehouse\Domain\Entity;
+namespace Warehouse\Domain\Product;
 
 use Warehouse\Domain\Contract\Entity;
 use Warehouse\Domain\Id;
-use Warehouse\Domain\ProductId;
-use Warehouse\Domain\Sku;
+use Warehouse\Domain\Product\ObjectValues\ProductId;
 
 /**
  * Class Product
@@ -40,7 +39,7 @@ class Product implements Entity
 
     /**
      * Product constructor.
-     * @param ProductId $id
+     * @param \Warehouse\Domain\Product\ObjectValues\ProductId $id
      * @param string $title
      * @param int $price
      * @param string $category
