@@ -13,5 +13,5 @@ interface Entity
     /**
      * @return Id
      */
-    public function getID(): Id;
+    public function getID();
 }

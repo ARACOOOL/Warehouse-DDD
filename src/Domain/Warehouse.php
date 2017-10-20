@@ -94,7 +94,6 @@ final class Warehouse
     public function acceptOrder(Order $order): void
     {
         $availableProducts = [];
-        /* @var $item \Warehouse\Domain\Product\Product */
         foreach ($order->getProducts() as $productId => $count) {
             if (!$this->isProductAvailable(new ProductId($productId))) {
                 $this->eventManager->dispatch(ProductIsNotAvailableEvent::getName(),

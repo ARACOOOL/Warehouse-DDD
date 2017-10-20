@@ -103,9 +103,9 @@ class Product implements Entity
     }
 
     /**
-     * @return Id
+     * @return ProductId
      */
-    public function getID(): Id
+    public function getID(): ProductId
     {
         return $this->id;
     }
