@@ -1,6 +1,6 @@
 <?php
 
-namespace Warehouse\Domain\Event\Product;
+namespace Warehouse\Domain\Product\Events;
 
 use Warehouse\Domain\Event\Event;
 use Warehouse\Domain\Product\Product;
