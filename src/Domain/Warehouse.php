@@ -12,6 +12,7 @@ use Warehouse\Domain\Event\ReturnProductsEvent;
 use Warehouse\Domain\Product\Events\ProductIsNotAvailableEvent;
 use Warehouse\Domain\Product\ObjectValues\ProductId;
 use Warehouse\Domain\Product\Product;
+use Warehouse\Domain\Product\ProductsContainer;
 use Warehouse\Domain\Product\Repositories\ProductsRepositoryInterface;
 use Warehouse\Domain\Repository\PurchasesRepositoryInterface;
 

@@ -1,6 +1,8 @@
 <?php
 
-namespace Warehouse\Domain;
+namespace Warehouse\Domain\Product;
+
+use Webmozart\Assert\Assert;
 
 /**
  * Class ProductsContainer
@@ -19,6 +21,7 @@ final class ProductsContainer
      */
     public function __construct(array $products)
     {
+        Assert::allIsInstanceOf($products, Product::class);
         $this->products = $products;
     }
 
