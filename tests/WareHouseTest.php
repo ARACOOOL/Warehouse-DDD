@@ -5,8 +5,6 @@ namespace tests;
 use PHPUnit\Framework\TestCase;
 use Ramsey\Uuid\Uuid;
 use Warehouse\Domain\Event\EventsManagerInterface;
-use Warehouse\Domain\Event\OutgoingPurchaseEvent;
-use Warehouse\Domain\Event\ReturnProductsEvent;
 use Warehouse\Domain\Invoice\Invoice;
 use Warehouse\Domain\ObjectValues\Money;
 use Warehouse\Domain\Order\Order;
@@ -15,7 +13,9 @@ use Warehouse\Domain\Product\Product;
 use Warehouse\Domain\Product\ProductsContainer;
 use Warehouse\Domain\Product\Repositories\ProductsRepositoryInterface;
 use Warehouse\Domain\Repository\PurchasesRepositoryInterface;
-use Warehouse\Domain\Warehouse;
+use Warehouse\Domain\Warehouse\Events\OutgoingPurchaseEvent;
+use Warehouse\Domain\Warehouse\Events\ReturnProductsEvent;
+use Warehouse\Domain\Warehouse\Warehouse;
 
 /**
  * Class WareHouseTest

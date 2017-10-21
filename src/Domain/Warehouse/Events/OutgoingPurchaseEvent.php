@@ -1,7 +1,8 @@
 <?php
 
-namespace Warehouse\Domain\Event;
+namespace Warehouse\Domain\Warehouse\Events;
 
+use Warehouse\Domain\Event\Event;
 use Warehouse\Domain\Invoice\Invoice;
 
 /**
