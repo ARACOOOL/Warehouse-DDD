@@ -5,6 +5,7 @@ namespace Warehouse\Domain\Order;
 use Warehouse\Domain\Contract\Entity;
 use Warehouse\Domain\Customer\Customer;
 use Warehouse\Domain\Id;
+use Warehouse\Domain\Order\ObjectValues\Status;
 use Warehouse\Domain\Product\Product;
 
 /**

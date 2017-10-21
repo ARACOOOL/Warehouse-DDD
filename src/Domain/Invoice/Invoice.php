@@ -1,6 +1,6 @@
 <?php
 
-namespace Warehouse\Domain\Entity;
+namespace Warehouse\Domain\Invoice;
 
 use Ramsey\Uuid\Uuid;
 use Warehouse\Domain\Calculator\TotalPriceCalculatorInterface;

@@ -1,6 +1,6 @@
 <?php
 
-namespace Warehouse\Domain\Order;
+namespace Warehouse\Domain\Order\ObjectValues;
 
 /**
  * Class Status

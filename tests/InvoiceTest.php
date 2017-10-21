@@ -7,11 +7,11 @@ use Ramsey\Uuid\Uuid;
 use Warehouse\Domain\Calculator\TotalPriceCalculator;
 use Warehouse\Domain\Customer\Customer;
 use Warehouse\Domain\Customer\ObjectValues\Address;
-use Warehouse\Domain\Entity\Invoice;
 use Warehouse\Domain\Id;
+use Warehouse\Domain\Invoice\Invoice;
 use Warehouse\Domain\Money;
+use Warehouse\Domain\Order\ObjectValues\Status;
 use Warehouse\Domain\Order\Order;
-use Warehouse\Domain\Order\Status;
 use Warehouse\Domain\Product\ObjectValues\ProductId;
 use Warehouse\Domain\Product\Product;
 

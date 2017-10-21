@@ -6,8 +6,8 @@ use Ramsey\Uuid\Uuid;
 use Warehouse\Domain\Contract\Entity;
 use Warehouse\Domain\Customer\ObjectValues\Address;
 use Warehouse\Domain\Id;
+use Warehouse\Domain\Order\ObjectValues\Status;
 use Warehouse\Domain\Order\Order;
-use Warehouse\Domain\Order\Status;
 
 /**
  * Class Customer

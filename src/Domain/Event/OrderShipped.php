@@ -2,7 +2,7 @@
 
 namespace Warehouse\Domain\Event;
 
-use Warehouse\Domain\Entity\Invoice;
+use Warehouse\Domain\Invoice\Invoice;
 
 /**
  * Class OrderShipped
@@ -33,7 +33,7 @@ class OrderShipped extends Event
     }
 
     /**
-     * @return Invoice
+     * @return \Warehouse\Domain\Invoice\Invoice
      */
     public function getInvoice(): Invoice
     {

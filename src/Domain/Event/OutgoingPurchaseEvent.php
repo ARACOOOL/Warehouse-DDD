@@ -2,7 +2,7 @@
 
 namespace Warehouse\Domain\Event;
 
-use Warehouse\Domain\Entity\Invoice;
+use Warehouse\Domain\Invoice\Invoice;
 
 /**
  * Class OutgoingPurchaseEvent
@@ -17,7 +17,7 @@ class OutgoingPurchaseEvent extends Event
 
     /**
      * OutgoingPurchaseEvent constructor.
-     * @param Invoice $invoice
+     * @param \Warehouse\Domain\Invoice\Invoice $invoice
      */
     public function __construct(Invoice $invoice)
     {
@@ -33,7 +33,7 @@ class OutgoingPurchaseEvent extends Event
     }
 
     /**
-     * @return Invoice
+     * @return \Warehouse\Domain\Invoice\Invoice
      */
     public function getInvoice(): Invoice
     {

@@ -2,7 +2,7 @@
 
 namespace Warehouse\Domain\Repository;
 
-use Warehouse\Domain\Entity\Invoice;
+use Warehouse\Domain\Invoice\Invoice;
 
 /**
  * Interface PurchasesRepositoryInterface
@@ -11,7 +11,7 @@ use Warehouse\Domain\Entity\Invoice;
 interface PurchasesRepositoryInterface
 {
     /**
-     * @param Invoice $invoice
+     * @param \Warehouse\Domain\Invoice\Invoice $invoice
      */
     public function outgoing(Invoice $invoice): void;
 }

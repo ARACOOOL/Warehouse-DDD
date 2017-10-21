@@ -4,10 +4,10 @@ namespace tests;
 
 use PHPUnit\Framework\TestCase;
 use Ramsey\Uuid\Uuid;
-use Warehouse\Domain\Entity\Invoice;
 use Warehouse\Domain\Event\EventsManagerInterface;
 use Warehouse\Domain\Event\OutgoingPurchaseEvent;
 use Warehouse\Domain\Event\ReturnProductsEvent;
+use Warehouse\Domain\Invoice\Invoice;
 use Warehouse\Domain\Money;
 use Warehouse\Domain\Order\Order;
 use Warehouse\Domain\Product\ObjectValues\ProductId;
