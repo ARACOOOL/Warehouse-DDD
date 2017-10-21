@@ -8,12 +8,12 @@ use Warehouse\Domain\Calculator\TotalPriceCalculator;
 use Warehouse\Domain\Customer\Customer;
 use Warehouse\Domain\Customer\ObjectValues\Address;
 use Warehouse\Domain\Entity\Invoice;
-use Warehouse\Domain\Entity\Order;
 use Warehouse\Domain\Id;
 use Warehouse\Domain\Money;
+use Warehouse\Domain\Order\Order;
+use Warehouse\Domain\Order\Status;
 use Warehouse\Domain\Product\ObjectValues\ProductId;
 use Warehouse\Domain\Product\Product;
-use Warehouse\Domain\Status;
 
 /**
  * Class InvoiceTest

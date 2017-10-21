@@ -1,12 +1,11 @@
 <?php
 
-namespace Warehouse\Domain\Entity;
+namespace Warehouse\Domain\Order;
 
 use Warehouse\Domain\Contract\Entity;
 use Warehouse\Domain\Customer\Customer;
 use Warehouse\Domain\Id;
 use Warehouse\Domain\Product\Product;
-use Warehouse\Domain\Status;
 
 /**
  * Class Order

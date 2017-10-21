@@ -5,9 +5,9 @@ namespace Warehouse\Domain\Customer;
 use Ramsey\Uuid\Uuid;
 use Warehouse\Domain\Contract\Entity;
 use Warehouse\Domain\Customer\ObjectValues\Address;
-use Warehouse\Domain\Entity\Order;
 use Warehouse\Domain\Id;
-use Warehouse\Domain\Status;
+use Warehouse\Domain\Order\Order;
+use Warehouse\Domain\Order\Status;
 
 /**
  * Class Customer
@@ -43,7 +43,7 @@ class Customer implements Entity
 
     /**
      * @param array $products
-     * @return Order
+     * @return \Warehouse\Domain\Order\Order
      * @throws \DomainException
      */
     public function createOrder(array $products = []): Order

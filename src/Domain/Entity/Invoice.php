@@ -8,6 +8,7 @@ use Warehouse\Domain\Contract\Entity;
 use Warehouse\Domain\Customer\ObjectValues\Address;
 use Warehouse\Domain\Id;
 use Warehouse\Domain\Money;
+use Warehouse\Domain\Order\Order;
 use Warehouse\Domain\Product\Product;
 
 /**
@@ -69,7 +70,7 @@ class Invoice implements Entity
         if ($status != self::STATUS_OPENED && $status != self::STATUS_SHIPPED) {
             throw new \InvalidArgumentException('Invalid status of invoice');
         }
-        
+
         $this->id = $id;
         $this->order = $order;
         $this->products = $products;

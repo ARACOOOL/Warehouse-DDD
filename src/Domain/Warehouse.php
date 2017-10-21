@@ -4,11 +4,11 @@ namespace Warehouse\Domain;
 
 use Warehouse\Domain\Customer\Customer;
 use Warehouse\Domain\Entity\Invoice;
-use Warehouse\Domain\Entity\Order;
 use Warehouse\Domain\Event\EventsManagerInterface;
 use Warehouse\Domain\Event\OrderShipped;
 use Warehouse\Domain\Event\OutgoingPurchaseEvent;
 use Warehouse\Domain\Event\ReturnProductsEvent;
+use Warehouse\Domain\Order\Order;
 use Warehouse\Domain\Product\Events\ProductIsNotAvailableEvent;
 use Warehouse\Domain\Product\ObjectValues\ProductId;
 use Warehouse\Domain\Product\Product;
