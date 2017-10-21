@@ -11,9 +11,8 @@ use Warehouse\Domain\Product\Product;
 interface TotalPriceCalculatorInterface
 {
     /**
-     * @param \Warehouse\Domain\Product\Product[] $products
+     * @param Product[] $products
      * @return int
-     * @internal param Invoice $invoice
      */
     public function calculate(array $products): int;
 }

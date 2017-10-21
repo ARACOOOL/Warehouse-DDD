@@ -13,7 +13,6 @@ class TotalPriceCalculator implements TotalPriceCalculatorInterface
     /**
      * @param Product[] $products
      * @return int
-     * @internal param Invoice $invoice
      */
     public function calculate(array $products): int
     {
