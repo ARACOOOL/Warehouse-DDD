@@ -16,7 +16,8 @@ use Warehouse\Domain\Product\ProductsContainer;
 use Warehouse\Domain\Product\Repositories\ProductsRepositoryInterface;
 use Warehouse\Domain\Repository\PurchasesRepositoryInterface;
 use Warehouse\Domain\Warehouse\Events\OutgoingPurchaseEvent;
-use Warehouse\Domain\Warehouse\Events\ReturnProductsEvent;
+use Warehouse\Domain\Warehouse\Events\ProductsReturnedByCustomerEvent;
+use Warehouse\Domain\Warehouse\Events\ReturnProductsToSupplierEvent;
 
 /**
  * Class Warehouse
@@ -76,17 +77,8 @@ final class Warehouse
         }
 
         if (count($returnProducts)) {
-            $this->returnProductsToSupplier(new ProductsContainer($returnProducts));
+            $this->eventManager->dispatch(ReturnProductsToSupplierEvent::getName(), new ReturnProductsToSupplierEvent($returnProducts));
         }
-    }
-
-    /**
-     * @param ProductsContainer $container
-     */
-    public function returnProductsToSupplier(ProductsContainer $container): void
-    {
-        $this->eventManager->dispatch(ReturnProductsEvent::getName(),
-            new ReturnProductsEvent($container->getProducts()));
     }
 
     /**
@@ -148,7 +140,7 @@ final class Warehouse
     public function acceptReturnedProducts(array $products): void
     {
         $this->placeProducts($products);
-        $this->eventManager->dispatch(ReturnProductsEvent::getName(), new ReturnProductsEvent($products));
+        $this->eventManager->dispatch(ProductsReturnedByCustomerEvent::getName(), new ProductsReturnedByCustomerEvent($products));
     }
 
     /**
@@ -164,16 +156,16 @@ final class Warehouse
      */
     public function registerProduct(Product $product): void
     {
-        $this->productRepository->new($product);
+        $this->productRepository->insert($product);
     }
 
     /**
      * @param ProductId $id
      * @return int
      */
-    public function getProductCount(ProductId $id): int
+    public function getCountOfProduct(ProductId $id): int
     {
-        return $this->productRepository->getProductCount($id);
+        return $this->productRepository->getCountById($id);
     }
 
     /**

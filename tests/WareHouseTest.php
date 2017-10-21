@@ -18,7 +18,8 @@ use Warehouse\Domain\Product\ProductsContainer;
 use Warehouse\Domain\Product\Repositories\ProductsRepositoryInterface;
 use Warehouse\Domain\Repository\PurchasesRepositoryInterface;
 use Warehouse\Domain\Warehouse\Events\OutgoingPurchaseEvent;
-use Warehouse\Domain\Warehouse\Events\ReturnProductsEvent;
+use Warehouse\Domain\Warehouse\Events\ProductsReturnedByCustomerEvent;
+use Warehouse\Domain\Warehouse\Events\ReturnProductsToSupplierEvent;
 use Warehouse\Domain\Warehouse\Warehouse;
 
 /**
@@ -35,9 +36,7 @@ class WareHouseTest extends TestCase
         $eventManager = $this->createMock(EventsManagerInterface::class);
         $eventManager->expects(self::once())
             ->method('dispatch')
-            ->with(ReturnProductsEvent::getName(), $this->callback(function ($subject) {
-                return $subject instanceof ReturnProductsEvent;
-            }));
+            ->with(ProductsReturnedByCustomerEvent::getName());
 
         $productId = new ProductId(Uuid::uuid4());
         $product = new Product(
@@ -64,8 +63,11 @@ class WareHouseTest extends TestCase
             ->method('increment')
             ->with($productId2);
 
-        $warehouse = new Warehouse($productRepository, $this->createMock(PurchasesRepositoryInterface::class),
-            $eventManager);
+        $warehouse = new Warehouse(
+            $productRepository,
+            $this->createMock(PurchasesRepositoryInterface::class),
+            $eventManager
+        );
         $warehouse->acceptContainer(new ProductsContainer([$product, $product2]));
     }
 
@@ -202,5 +204,59 @@ class WareHouseTest extends TestCase
         $invoice = $warehouse->acceptOrder($order);
 
         self::assertInstanceOf(Invoice::class, $invoice);
+    }
+
+    /**
+     *
+     */
+    public function testCountOfProduct()
+    {
+        $productRepository = $this->createMock(ProductsRepositoryInterface::class);
+        $productRepository->expects(self::once())
+            ->method('getCountById')
+            ->willReturn(2);
+        $warehouse = new Warehouse(
+            $productRepository,
+            $this->createMock(PurchasesRepositoryInterface::class),
+            $this->createMock(EventsManagerInterface::class)
+        );
+
+        self::assertEquals(2, $warehouse->getCountOfProduct(new ProductId(Uuid::uuid4()->toString())));
+    }
+
+    public function testReturnedProducts()
+    {
+        $eventManager = $this->createMock(EventsManagerInterface::class);
+        $eventManager->expects(self::exactly(2))
+            ->method('dispatch')
+            ->withConsecutive([ReturnProductsToSupplierEvent::getName()], [ProductsReturnedByCustomerEvent::getName()]);
+
+        $productId = new ProductId(Uuid::uuid4()->toString());
+
+        $product = $this->createMock(Product::class);
+        $product->expects(self::once())
+            ->method('isExpired')
+            ->willReturn(true);
+
+        $product2 = $this->createMock(Product::class);
+        $product2->expects(self::once())
+            ->method('isExpired')
+            ->willReturn(false);
+        $product2->expects(self::once())
+            ->method('getID')
+            ->willReturn($productId);
+
+        $productRepository = $this->createMock(ProductsRepositoryInterface::class);
+        $productRepository->expects(self::once())
+            ->method('increment')
+            ->with($productId);
+
+        $warehouse = new Warehouse(
+            $productRepository,
+            $this->createMock(PurchasesRepositoryInterface::class),
+            $eventManager
+        );
+
+        $warehouse->acceptReturnedProducts([$product, $product2]);
     }
 }

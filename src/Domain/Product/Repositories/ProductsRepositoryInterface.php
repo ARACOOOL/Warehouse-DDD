@@ -25,11 +25,11 @@ interface ProductsRepositoryInterface extends RepositoryInterface
     /**
      * @param \Warehouse\Domain\Product\Product $product
      */
-    public function new(Product $product): void;
+    public function insert(Product $product): void;
 
     /**
      * @param ProductId $id
      * @return int
      */
-    public function getProductCount(ProductId $id): int;
+    public function getCountById(ProductId $id): int;
 }

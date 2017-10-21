@@ -5,10 +5,10 @@ namespace Warehouse\Domain\Warehouse\Events;
 use Warehouse\Domain\Event\Event;
 
 /**
- * Class ReturnProductsEvent
+ * Class ReturnProductsToSupplierEvent
  * @package Warehouse\Domain\Event
  */
-class ReturnProductsEvent extends Event
+class ReturnProductsToSupplierEvent extends Event
 {
     /**
      * @var array
@@ -16,7 +16,7 @@ class ReturnProductsEvent extends Event
     private $products;
 
     /**
-     * ReturnProductsEvent constructor.
+     * ReturnProductsToSupplierEvent constructor.
      * @param \Warehouse\Domain\Product\Product[] $products
      */
     public function __construct(array $products)
