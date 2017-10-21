@@ -4,10 +4,14 @@ namespace tests;
 
 use PHPUnit\Framework\TestCase;
 use Ramsey\Uuid\Uuid;
+use Warehouse\Domain\Customer\Customer;
 use Warehouse\Domain\Event\EventsManagerInterface;
 use Warehouse\Domain\Invoice\Invoice;
+use Warehouse\Domain\ObjectValues\Id;
 use Warehouse\Domain\ObjectValues\Money;
+use Warehouse\Domain\Order\ObjectValues\Status;
 use Warehouse\Domain\Order\Order;
+use Warehouse\Domain\Product\Events\ProductIsNotAvailableEvent;
 use Warehouse\Domain\Product\ObjectValues\ProductId;
 use Warehouse\Domain\Product\Product;
 use Warehouse\Domain\Product\ProductsContainer;
@@ -65,15 +69,31 @@ class WareHouseTest extends TestCase
         $warehouse->acceptContainer(new ProductsContainer([$product, $product2]));
     }
 
-    /**
-     *
-     */
-    public function testIsProductAvailableWithException(): void
+    public function testIsProductAvailable()
     {
         $productRepository = $this->createMock(ProductsRepositoryInterface::class);
         $productRepository->expects(self::once())
             ->method('findOne')
-            ->willThrowException(new \InvalidArgumentException());
+            ->willReturn($this->createMock(Product::class));
+
+        $warehouse = new Warehouse(
+            $productRepository,
+            $this->createMock(PurchasesRepositoryInterface::class),
+            $this->createMock(EventsManagerInterface::class)
+        );
+
+        self::assertTrue($warehouse->isProductAvailable(new ProductId(Uuid::uuid4())));
+    }
+
+    /**
+     *
+     */
+    public function testIsNotProductAvailable(): void
+    {
+        $productRepository = $this->createMock(ProductsRepositoryInterface::class);
+        $productRepository->expects(self::once())
+            ->method('findOne')
+            ->willReturn(null);
         $warehouse = new Warehouse($productRepository, $this->createMock(PurchasesRepositoryInterface::class),
             $this->createMock(EventsManagerInterface::class));
         self::assertFalse($warehouse->isProductAvailable(new ProductId(Uuid::uuid4())));
@@ -101,5 +121,86 @@ class WareHouseTest extends TestCase
             Invoice::create($this->createMock(Order::class), []),
             Money::USD(500)
         );
+    }
+
+    /**
+     *
+     */
+    public function testAcceptOrderAndWeHaveAllProducts()
+    {
+        $eventManager = $this->createMock(EventsManagerInterface::class);
+
+        $productRepository = $this->createMock(ProductsRepositoryInterface::class);
+        $productRepository->expects(self::once())
+            ->method('findOne')
+            ->willReturn($this->createMock(Product::class));
+
+        $warehouse = new Warehouse(
+            $productRepository,
+            $this->createMock(PurchasesRepositoryInterface::class),
+            $eventManager
+        );
+        $order = new Order(
+            new Id('sdf'),
+            $this->createMock(Customer::class),
+            [],
+            new \DateTime(),
+            new \DateTime(),
+            new Status(Status::STATUS_OPEN)
+        );
+        $order->addProduct(new Product(
+            new ProductId(Uuid::uuid4()->toString()),
+            'test title',
+            123,
+            'test category',
+            new \DateTime(),
+            new \DateTime('tomorrow')
+        ));
+        $invoice = $warehouse->acceptOrder($order);
+
+        self::assertInstanceOf(Invoice::class, $invoice);
+    }
+
+    /**
+     *
+     */
+    public function testAcceptOrderAndWeDoNotHaveProduct()
+    {
+        $eventManager = $this->createMock(EventsManagerInterface::class);
+        $eventManager->expects(self::once())
+            ->method('dispatch')
+            ->with(ProductIsNotAvailableEvent::getName());
+
+        $productRepository = $this->createMock(ProductsRepositoryInterface::class);
+        $productRepository->expects(self::once())
+            ->method('findOne')
+            ->willReturn(null);
+
+        $warehouse = new Warehouse(
+            $productRepository,
+            $this->createMock(PurchasesRepositoryInterface::class),
+            $eventManager
+        );
+
+        $order = new Order(
+            new Id('sdf'),
+            $this->createMock(Customer::class),
+            [],
+            new \DateTime(),
+            new \DateTime(),
+            new Status(Status::STATUS_OPEN)
+        );
+        $order->addProduct(new Product(
+            new ProductId(Uuid::uuid4()->toString()),
+            'test title',
+            123,
+            'test category',
+            new \DateTime(),
+            new \DateTime('tomorrow')
+        ));
+
+        $invoice = $warehouse->acceptOrder($order);
+
+        self::assertInstanceOf(Invoice::class, $invoice);
     }
 }

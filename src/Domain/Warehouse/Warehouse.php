@@ -5,6 +5,7 @@ namespace Warehouse\Domain\Warehouse;
 use Warehouse\Domain\Customer\Customer;
 use Warehouse\Domain\Event\EventsManagerInterface;
 use Warehouse\Domain\Invoice\Invoice;
+use Warehouse\Domain\Invoice\ObjectValues\Status;
 use Warehouse\Domain\ObjectValues\Money;
 use Warehouse\Domain\Order\Events\OrderShipped;
 use Warehouse\Domain\Order\Order;
@@ -90,23 +91,24 @@ final class Warehouse
 
     /**
      * @param Order $order
+     * @return Invoice
      * @throws \InvalidArgumentException
      */
-    public function acceptOrder(Order $order): void
+    public function acceptOrder(Order $order): Invoice
     {
         $availableProducts = [];
-        foreach ($order->getProducts() as $productId => $count) {
-            if (!$this->isProductAvailable(new ProductId($productId))) {
+        foreach ($order->getProducts() as $product) {
+            if (!$this->isProductAvailable($product->getID())) {
                 $this->eventManager->dispatch(ProductIsNotAvailableEvent::getName(),
-                    new ProductIsNotAvailableEvent($productId));
+                    new ProductIsNotAvailableEvent($product));
                 continue;
             }
 
-            $availableProducts[$productId] = $count;
+            $productId = $product->getID();
+            $availableProducts[$productId->id()] = $order->getCountOfProduct($productId);
         }
 
-        $invoice = $this->createInvoice($order, $availableProducts);
-        $this->sendOrder($invoice);
+        return $this->createInvoice($order, $availableProducts);
     }
 
     /**
@@ -115,11 +117,7 @@ final class Warehouse
      */
     public function isProductAvailable(ProductId $id): bool
     {
-        try {
-            return (bool)$this->productRepository->findOne($id);
-        } catch (\InvalidArgumentException $exception) {
-            return false;
-        }
+        return (bool)$this->productRepository->findOne($id);
     }
 
     /**
@@ -135,11 +133,12 @@ final class Warehouse
 
     /**
      * @param Invoice $invoice
+     * @throws \InvalidArgumentException
      */
-    private function sendOrder(Invoice $invoice): void
+    public function sendOrder(Invoice $invoice): void
     {
         $invoice->setShippedAt(new \DateTime());
-        $invoice->setStatus(Invoice::STATUS_SHIPPED);
+        $invoice->setStatus(new Status(Status::STATUS_SHIPPED));
         $this->eventManager->dispatch(OrderShipped::getName(), new OrderShipped($invoice));
     }
 

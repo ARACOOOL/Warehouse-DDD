@@ -99,7 +99,7 @@ class OrderTest extends TestCase
     public function testCantChangeOrderAfterItClosed(): void
     {
         $this->expectException(\DomainException::class);
-        $this->expectExceptionMessage('Can\'t change order, it was closed');
+        $this->expectExceptionMessage('Can not change order, it was closed');
 
         $order = new Order(
             new Id('test'),

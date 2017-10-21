@@ -125,9 +125,9 @@ class Invoice implements Entity
     }
 
     /**
-     * @param int $status
+     * @param Status $status
      */
-    public function setStatus(int $status): void
+    public function setStatus(Status $status): void
     {
         $this->status = $status;
     }

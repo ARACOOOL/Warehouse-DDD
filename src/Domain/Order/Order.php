@@ -6,7 +6,9 @@ use Warehouse\Domain\Customer\Customer;
 use Warehouse\Domain\Entity;
 use Warehouse\Domain\ObjectValues\Id;
 use Warehouse\Domain\Order\ObjectValues\Status;
+use Warehouse\Domain\Product\ObjectValues\ProductId;
 use Warehouse\Domain\Product\Product;
+use Webmozart\Assert\Assert;
 
 /**
  * Class Order
@@ -38,6 +40,10 @@ class Order implements Entity
      * @var Product[]
      */
     private $products;
+    /**
+     * @var array
+     */
+    private $productCounts;
 
     /**
      * Order constructor.
@@ -56,12 +62,14 @@ class Order implements Entity
         \DateTime $updatedAt,
         Status $status
     ) {
+        Assert::allIsInstanceOf($products, Product::class);
+
         $this->id = $id;
         $this->customer = $customer;
-        $this->products = $products;
         $this->createdAt = $createdAt;
         $this->updatedAt = $updatedAt;
         $this->status = $status;
+        $this->products = $products;
     }
 
     /**
@@ -97,7 +105,7 @@ class Order implements Entity
     }
 
     /**
-     * @return array
+     * @return Product[]
      */
     public function getProducts(): array
     {
@@ -112,10 +120,14 @@ class Order implements Entity
     public function addProduct(Product $product): void
     {
         if ($this->getStatus()->isClosed()) {
-            throw new \DomainException('Can\'t change order, it was closed');
+            throw new \DomainException('Can not change order, it was closed');
         }
 
-        $this->products[] = $product;
+        $productId = $product->getID()->id();
+        $this->products[$productId] = $product;
+        $this->productCounts[$productId] = isset($this->productCounts[$productId])
+            ? $this->productCounts[$productId] + 1
+            : 1;
         $this->updatedAt = new \DateTime();
     }
 
@@ -150,5 +162,14 @@ class Order implements Entity
                 unset($this->products[$key]);
             }
         }
+    }
+
+    /**
+     * @param ProductId $id
+     * @return int
+     */
+    public function getCountOfProduct(ProductId $id): int
+    {
+        return $this->productCounts[$id->id()];
     }
 }

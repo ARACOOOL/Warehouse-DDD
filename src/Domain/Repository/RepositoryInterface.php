@@ -15,5 +15,5 @@ interface RepositoryInterface
      * @param \Warehouse\Domain\ObjectValues\Id $id
      * @return Entity
      */
-    public function findOne(Id $id): Entity;
+    public function findOne(Id $id): ?Entity;
 }
