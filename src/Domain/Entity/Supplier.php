@@ -2,8 +2,8 @@
 
 namespace Warehouse\Domain\Entity;
 
-use Warehouse\Domain\Contract\Entity;
-use Warehouse\Domain\Id;
+use Warehouse\Domain\Entity;
+use Warehouse\Domain\ObjectValues\Id;
 
 /**
  * Class Supplier

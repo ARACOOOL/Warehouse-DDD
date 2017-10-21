@@ -1,8 +1,8 @@
 <?php
 
-namespace Warehouse\Domain\Contract;
+namespace Warehouse\Domain;
 
-use Warehouse\Domain\Id;
+use Warehouse\Domain\ObjectValues\Id;
 
 /**
  * Class Entity

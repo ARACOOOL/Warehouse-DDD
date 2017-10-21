@@ -2,7 +2,7 @@
 
 namespace Warehouse\Domain\Product\ObjectValues;
 
-use Warehouse\Domain\Id;
+use Warehouse\Domain\ObjectValues\Id;
 use Webmozart\Assert\Assert;
 
 /**

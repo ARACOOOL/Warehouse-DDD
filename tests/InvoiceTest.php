@@ -7,13 +7,14 @@ use Ramsey\Uuid\Uuid;
 use Warehouse\Domain\Calculator\TotalPriceCalculator;
 use Warehouse\Domain\Customer\Customer;
 use Warehouse\Domain\Customer\ObjectValues\Address;
-use Warehouse\Domain\Id;
 use Warehouse\Domain\Invoice\Invoice;
-use Warehouse\Domain\Money;
+use Warehouse\Domain\ObjectValues\Id;
+use Warehouse\Domain\ObjectValues\Money;
 use Warehouse\Domain\Order\ObjectValues\Status;
 use Warehouse\Domain\Order\Order;
 use Warehouse\Domain\Product\ObjectValues\ProductId;
 use Warehouse\Domain\Product\Product;
+use Warehouse\Domain\Invoice\ObjectValues\Status as InvoiceStatus;
 
 /**
  * Class InvoiceTest
@@ -33,10 +34,9 @@ class InvoiceTest extends TestCase
             new Id('test'),
             $this->createMock(Order::class),
             [],
-            4,
+            new InvoiceStatus(4),
             new \DateTime(),
-            new \DateTime(),
-            new TotalPriceCalculator()
+            new \DateTime()
         );
     }
 
@@ -49,7 +49,7 @@ class InvoiceTest extends TestCase
         $invoice->setCalculator(new TotalPriceCalculator());
 
         self::assertInstanceOf(Invoice::class, $invoice);
-        self::assertEquals(Invoice::STATUS_OPENED, $invoice->getStatus());
+        self::assertEquals(new InvoiceStatus(InvoiceStatus::STATUS_OPENED), $invoice->getStatus());
     }
 
     /**

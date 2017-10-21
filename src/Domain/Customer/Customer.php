@@ -3,9 +3,9 @@
 namespace Warehouse\Domain\Customer;
 
 use Ramsey\Uuid\Uuid;
-use Warehouse\Domain\Contract\Entity;
 use Warehouse\Domain\Customer\ObjectValues\Address;
-use Warehouse\Domain\Id;
+use Warehouse\Domain\Entity;
+use Warehouse\Domain\ObjectValues\Id;
 use Warehouse\Domain\Order\ObjectValues\Status;
 use Warehouse\Domain\Order\Order;
 
@@ -67,7 +67,7 @@ class Customer implements Entity
     }
 
     /**
-     * @return Id
+     * @return \Warehouse\Domain\ObjectValues\Id
      */
     public function getID(): Id
     {

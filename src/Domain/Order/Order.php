@@ -2,9 +2,9 @@
 
 namespace Warehouse\Domain\Order;
 
-use Warehouse\Domain\Contract\Entity;
 use Warehouse\Domain\Customer\Customer;
-use Warehouse\Domain\Id;
+use Warehouse\Domain\Entity;
+use Warehouse\Domain\ObjectValues\Id;
 use Warehouse\Domain\Order\ObjectValues\Status;
 use Warehouse\Domain\Product\Product;
 
@@ -15,7 +15,7 @@ use Warehouse\Domain\Product\Product;
 class Order implements Entity
 {
     /**
-     * @var Id
+     * @var \Warehouse\Domain\ObjectValues\Id
      */
     private $id;
     /**
@@ -89,7 +89,7 @@ class Order implements Entity
     }
 
     /**
-     * @return Id
+     * @return \Warehouse\Domain\ObjectValues\Id
      */
     public function getID(): Id
     {

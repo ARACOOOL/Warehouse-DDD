@@ -8,7 +8,7 @@ use Warehouse\Domain\Event\EventsManagerInterface;
 use Warehouse\Domain\Event\OutgoingPurchaseEvent;
 use Warehouse\Domain\Event\ReturnProductsEvent;
 use Warehouse\Domain\Invoice\Invoice;
-use Warehouse\Domain\Money;
+use Warehouse\Domain\ObjectValues\Money;
 use Warehouse\Domain\Order\Order;
 use Warehouse\Domain\Product\ObjectValues\ProductId;
 use Warehouse\Domain\Product\Product;

@@ -2,8 +2,8 @@
 
 namespace Warehouse\Domain\Product;
 
-use Warehouse\Domain\Contract\Entity;
-use Warehouse\Domain\Id;
+use Warehouse\Domain\Entity;
+use Warehouse\Domain\ObjectValues\Id;
 use Warehouse\Domain\Product\ObjectValues\ProductId;
 
 /**

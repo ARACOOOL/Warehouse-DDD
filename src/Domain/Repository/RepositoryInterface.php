@@ -2,8 +2,8 @@
 
 namespace Warehouse\Domain\Repository;
 
-use Warehouse\Domain\Contract\Entity;
-use Warehouse\Domain\Id;
+use Warehouse\Domain\Entity;
+use Warehouse\Domain\ObjectValues\Id;
 
 /**
  * Interface RepositoryInterface
@@ -12,7 +12,7 @@ use Warehouse\Domain\Id;
 interface RepositoryInterface
 {
     /**
-     * @param Id $id
+     * @param \Warehouse\Domain\ObjectValues\Id $id
      * @return Entity
      */
     public function findOne(Id $id): Entity;

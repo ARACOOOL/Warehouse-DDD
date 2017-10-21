@@ -10,7 +10,7 @@ class Status
 {
     const STATUS_SHIPPED = 2;
     const STATUS_OPENED = 1;
-    
+
     /**
      * @var int
      */

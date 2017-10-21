@@ -4,11 +4,11 @@ namespace Warehouse\Domain\Invoice;
 
 use Ramsey\Uuid\Uuid;
 use Warehouse\Domain\Calculator\TotalPriceCalculatorInterface;
-use Warehouse\Domain\Contract\Entity;
 use Warehouse\Domain\Customer\ObjectValues\Address;
-use Warehouse\Domain\Id;
+use Warehouse\Domain\Entity;
 use Warehouse\Domain\Invoice\ObjectValues\Status;
-use Warehouse\Domain\Money;
+use Warehouse\Domain\ObjectValues\Id;
+use Warehouse\Domain\ObjectValues\Money;
 use Warehouse\Domain\Order\Order;
 use Warehouse\Domain\Product\Product;
 
@@ -49,7 +49,7 @@ class Invoice implements Entity
 
     /**
      * Invoice constructor.
-     * @param Id $id
+     * @param \Warehouse\Domain\ObjectValues\Id $id
      * @param Order $order
      * @param Product[] $products
      * @param Status $status
@@ -86,7 +86,7 @@ class Invoice implements Entity
             new Id(Uuid::uuid4()),
             $order,
             $products,
-            self::STATUS_OPENED,
+            new Status(Status::STATUS_OPENED),
             new \DateTime(),
             null
         );
@@ -117,9 +117,9 @@ class Invoice implements Entity
     }
 
     /**
-     * @return int
+     * @return Status
      */
-    public function getStatus(): int
+    public function getStatus(): Status
     {
         return $this->status;
     }

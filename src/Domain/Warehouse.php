@@ -8,6 +8,7 @@ use Warehouse\Domain\Event\OrderShipped;
 use Warehouse\Domain\Event\OutgoingPurchaseEvent;
 use Warehouse\Domain\Event\ReturnProductsEvent;
 use Warehouse\Domain\Invoice\Invoice;
+use Warehouse\Domain\ObjectValues\Money;
 use Warehouse\Domain\Order\Order;
 use Warehouse\Domain\Product\Events\ProductIsNotAvailableEvent;
 use Warehouse\Domain\Product\ObjectValues\ProductId;
