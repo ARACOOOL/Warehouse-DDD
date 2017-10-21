@@ -7,6 +7,7 @@ use Warehouse\Domain\Calculator\TotalPriceCalculatorInterface;
 use Warehouse\Domain\Contract\Entity;
 use Warehouse\Domain\Customer\ObjectValues\Address;
 use Warehouse\Domain\Id;
+use Warehouse\Domain\Invoice\ObjectValues\Status;
 use Warehouse\Domain\Money;
 use Warehouse\Domain\Order\Order;
 use Warehouse\Domain\Product\Product;
@@ -17,8 +18,6 @@ use Warehouse\Domain\Product\Product;
  */
 class Invoice implements Entity
 {
-    const STATUS_SHIPPED = 2;
-    const STATUS_OPENED = 1;
     /**
      * @var Id
      */
@@ -32,7 +31,7 @@ class Invoice implements Entity
      */
     private $products;
     /**
-     * @var int
+     * @var Status
      */
     private $status;
     /**
@@ -53,24 +52,18 @@ class Invoice implements Entity
      * @param Id $id
      * @param Order $order
      * @param Product[] $products
-     * @param int $status
+     * @param Status $status
      * @param \DateTime $createdAt
      * @param \DateTime $shippedAt
-     * @internal param TotalPriceCalculatorInterface $calculator
-     * @throws \InvalidArgumentException
      */
     public function __construct(
         Id $id,
         Order $order,
         array $products,
-        int $status,
+        Status $status,
         \DateTime $createdAt,
         \DateTime $shippedAt = null
     ) {
-        if ($status != self::STATUS_OPENED && $status != self::STATUS_SHIPPED) {
-            throw new \InvalidArgumentException('Invalid status of invoice');
-        }
-
         $this->id = $id;
         $this->order = $order;
         $this->products = $products;
