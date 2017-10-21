@@ -1,6 +1,6 @@
 <?php
 
-namespace Warehouse\Domain\Calculator;
+namespace Warehouse\Domain\Invoice\Calculator;
 
 use Warehouse\Domain\Product\Product;
 

@@ -4,17 +4,17 @@ namespace tests;
 
 use PHPUnit\Framework\TestCase;
 use Ramsey\Uuid\Uuid;
-use Warehouse\Domain\Calculator\TotalPriceCalculator;
 use Warehouse\Domain\Customer\Customer;
 use Warehouse\Domain\Customer\ObjectValues\Address;
+use Warehouse\Domain\Invoice\Calculator\TotalPriceCalculator;
 use Warehouse\Domain\Invoice\Invoice;
+use Warehouse\Domain\Invoice\ObjectValues\Status as InvoiceStatus;
 use Warehouse\Domain\ObjectValues\Id;
 use Warehouse\Domain\ObjectValues\Money;
 use Warehouse\Domain\Order\ObjectValues\Status;
 use Warehouse\Domain\Order\Order;
 use Warehouse\Domain\Product\ObjectValues\ProductId;
 use Warehouse\Domain\Product\Product;
-use Warehouse\Domain\Invoice\ObjectValues\Status as InvoiceStatus;
 
 /**
  * Class InvoiceTest

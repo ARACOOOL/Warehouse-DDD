@@ -3,9 +3,9 @@
 namespace Warehouse\Domain\Invoice;
 
 use Ramsey\Uuid\Uuid;
-use Warehouse\Domain\Calculator\TotalPriceCalculatorInterface;
 use Warehouse\Domain\Customer\ObjectValues\Address;
 use Warehouse\Domain\Entity;
+use Warehouse\Domain\Invoice\Calculator\TotalPriceCalculatorInterface;
 use Warehouse\Domain\Invoice\ObjectValues\Status;
 use Warehouse\Domain\ObjectValues\Id;
 use Warehouse\Domain\ObjectValues\Money;
@@ -185,7 +185,7 @@ class Invoice implements Entity
     }
 
     /**
-     * @param TotalPriceCalculatorInterface $calculator
+     * @param \Warehouse\Domain\Invoice\Calculator\TotalPriceCalculatorInterface $calculator
      */
     public function setCalculator(TotalPriceCalculatorInterface $calculator): void
     {
