@@ -1,6 +1,6 @@
 <?php
 
-namespace Warehouse\Domain\Entity;
+namespace Warehouse\Domain\Supplier;
 
 use Warehouse\Domain\Entity;
 use Warehouse\Domain\ObjectValues\Id;
