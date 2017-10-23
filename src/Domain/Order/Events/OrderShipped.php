@@ -28,7 +28,7 @@ class OrderShipped extends Event
     /**
      * @return string
      */
-    public static function getName(): string
+    public function getName(): string
     {
         return 'order_shipped';
     }

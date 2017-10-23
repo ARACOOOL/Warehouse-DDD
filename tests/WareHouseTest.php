@@ -36,7 +36,7 @@ class WareHouseTest extends TestCase
         $eventManager = $this->createMock(EventsManagerInterface::class);
         $eventManager->expects(self::once())
             ->method('dispatch')
-            ->with(ProductsReturnedByCustomerEvent::getName());
+            ->with($this->isInstanceOf(ReturnProductsToSupplierEvent::class));
 
         $productId = new ProductId(Uuid::uuid4());
         $product = new Product(
@@ -109,7 +109,7 @@ class WareHouseTest extends TestCase
         $eventManager = $this->createMock(EventsManagerInterface::class);
         $eventManager->expects(self::once())
             ->method('dispatch')
-            ->with(OutgoingPurchaseEvent::getName());
+            ->with($this->isInstanceOf(OutgoingPurchaseEvent::class));
         $purchases = $this->createMock(PurchasesRepositoryInterface::class);
         $purchases->expects(self::once())
             ->method('outgoing');
@@ -171,7 +171,7 @@ class WareHouseTest extends TestCase
         $eventManager = $this->createMock(EventsManagerInterface::class);
         $eventManager->expects(self::once())
             ->method('dispatch')
-            ->with(ProductIsNotAvailableEvent::getName());
+            ->with($this->isInstanceOf(ProductIsNotAvailableEvent::class));
 
         $productRepository = $this->createMock(ProductsRepositoryInterface::class);
         $productRepository->expects(self::once())
@@ -229,7 +229,7 @@ class WareHouseTest extends TestCase
         $eventManager = $this->createMock(EventsManagerInterface::class);
         $eventManager->expects(self::exactly(2))
             ->method('dispatch')
-            ->withConsecutive([ReturnProductsToSupplierEvent::getName()], [ProductsReturnedByCustomerEvent::getName()]);
+            ->withConsecutive([$this->isInstanceOf(ReturnProductsToSupplierEvent::class)], [$this->isInstanceOf(ProductsReturnedByCustomerEvent::class)]);
 
         $productId = new ProductId(Uuid::uuid4()->toString());
 

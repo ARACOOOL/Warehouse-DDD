@@ -9,10 +9,9 @@ namespace Warehouse\Domain\Event;
 interface EventsManagerInterface
 {
     /**
-     * @param string $eventName
      * @param Event $event
      */
-    public function dispatch(string $eventName, Event $event): void;
+    public function dispatch(Event $event): void;
 
     /**
      * @param EventHandlerInterface $handler

@@ -77,7 +77,7 @@ final class Warehouse
         }
 
         if (count($returnProducts)) {
-            $this->eventManager->dispatch(ReturnProductsToSupplierEvent::getName(), new ReturnProductsToSupplierEvent($returnProducts));
+            $this->eventManager->dispatch(new ReturnProductsToSupplierEvent($returnProducts));
         }
     }
 
@@ -91,8 +91,7 @@ final class Warehouse
         $availableProducts = [];
         foreach ($order->getProducts() as $product) {
             if (!$this->isProductAvailable($product->getID())) {
-                $this->eventManager->dispatch(ProductIsNotAvailableEvent::getName(),
-                    new ProductIsNotAvailableEvent($product));
+                $this->eventManager->dispatch(new ProductIsNotAvailableEvent($product));
                 continue;
             }
 
@@ -131,7 +130,7 @@ final class Warehouse
     {
         $invoice->setShippedAt(new \DateTime());
         $invoice->setStatus(new Status(Status::STATUS_SHIPPED));
-        $this->eventManager->dispatch(OrderShipped::getName(), new OrderShipped($invoice));
+        $this->eventManager->dispatch(new OrderShipped($invoice));
     }
 
     /**
@@ -140,7 +139,7 @@ final class Warehouse
     public function acceptReturnedProducts(array $products): void
     {
         $this->placeProducts($products);
-        $this->eventManager->dispatch(ProductsReturnedByCustomerEvent::getName(), new ProductsReturnedByCustomerEvent($products));
+        $this->eventManager->dispatch(new ProductsReturnedByCustomerEvent($products));
     }
 
     /**
@@ -175,6 +174,6 @@ final class Warehouse
     public function receiveMoney(Invoice $invoice, Money $money): void
     {
         $this->purchasesRepository->outgoing($invoice);
-        $this->eventManager->dispatch(OutgoingPurchaseEvent::getName(), new OutgoingPurchaseEvent($invoice));
+        $this->eventManager->dispatch(new OutgoingPurchaseEvent($invoice));
     }
 }

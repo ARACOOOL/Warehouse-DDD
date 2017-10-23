@@ -11,5 +11,5 @@ abstract class Event
     /**
      * @return string
      */
-    abstract public static function getName(): string;
+    abstract public function getName(): string;
 }

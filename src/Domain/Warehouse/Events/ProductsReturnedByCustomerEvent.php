@@ -27,7 +27,7 @@ class ProductsReturnedByCustomerEvent extends Event
     /**
      * @return string
      */
-    public static function getName(): string
+    public function getName(): string
     {
         return 'return_products';
     }

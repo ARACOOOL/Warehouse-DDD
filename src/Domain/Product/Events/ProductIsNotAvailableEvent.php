@@ -11,7 +11,7 @@ class ProductIsNotAvailableEvent extends ProductEvent
     /**
      * @return string
      */
-    public static function getName(): string
+    public function getName(): string
     {
         return 'product_is_not_available';
     }

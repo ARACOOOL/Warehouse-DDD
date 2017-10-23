@@ -28,7 +28,7 @@ class OutgoingPurchaseEvent extends Event
     /**
      * @return string
      */
-    public static function getName(): string
+    public function getName(): string
     {
         return 'outgoing_purchase';
     }
