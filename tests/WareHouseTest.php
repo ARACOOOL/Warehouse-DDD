@@ -7,8 +7,10 @@ use Ramsey\Uuid\Uuid;
 use Warehouse\Domain\Customer\Customer;
 use Warehouse\Domain\Event\EventsManagerInterface;
 use Warehouse\Domain\Invoice\Invoice;
+use Warehouse\Domain\Invoice\ObjectValues\Status as InvoiceStatus;
 use Warehouse\Domain\ObjectValues\Id;
 use Warehouse\Domain\ObjectValues\Money;
+use Warehouse\Domain\Order\Events\OrderShipped;
 use Warehouse\Domain\Order\ObjectValues\Status;
 use Warehouse\Domain\Order\Order;
 use Warehouse\Domain\Product\Events\ProductIsNotAvailableEvent;
@@ -229,7 +231,8 @@ class WareHouseTest extends TestCase
         $eventManager = $this->createMock(EventsManagerInterface::class);
         $eventManager->expects(self::exactly(2))
             ->method('dispatch')
-            ->withConsecutive([$this->isInstanceOf(ReturnProductsToSupplierEvent::class)], [$this->isInstanceOf(ProductsReturnedByCustomerEvent::class)]);
+            ->withConsecutive([$this->isInstanceOf(ReturnProductsToSupplierEvent::class)],
+                [$this->isInstanceOf(ProductsReturnedByCustomerEvent::class)]);
 
         $productId = new ProductId(Uuid::uuid4()->toString());
 
@@ -258,5 +261,29 @@ class WareHouseTest extends TestCase
         );
 
         $warehouse->acceptReturnedProducts([$product, $product2]);
+    }
+
+    public function testSendOrder()
+    {
+        $eventManager = $this->createMock(EventsManagerInterface::class);
+        $eventManager->expects(self::once())
+            ->method('dispatch')
+            ->with($this->isInstanceOf(OrderShipped::class));
+
+        $warehouse = new Warehouse(
+            $this->createMock(ProductsRepositoryInterface::class),
+            $this->createMock(PurchasesRepositoryInterface::class),
+            $eventManager
+        );
+
+        $invoice = $this->createMock(Invoice::class);
+        $invoice->expects(self::once())
+            ->method('setShippedAt')
+            ->with($this->isInstanceOf(\DateTime::class));
+        $invoice->expects(self::once())
+            ->method('setStatus')
+            ->with($this->isInstanceOf(InvoiceStatus::class));
+
+        $warehouse->sendOrder($invoice);
     }
 }
