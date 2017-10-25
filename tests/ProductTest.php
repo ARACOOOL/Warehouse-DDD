@@ -44,4 +44,21 @@ class ProductTest extends TestCase
         );
         self::assertFalse($product->isExpired());
     }
+
+    public function testProductGetters()
+    {
+        $product = new Product(
+            new ProductId(Uuid::uuid4()),
+            'test title',
+            123,
+            'test category',
+            new \DateTime(),
+            new \DateTime('tomorrow')
+        );
+
+        self::assertEquals('test title', $product->getTitle());
+        self::assertEquals('test category', $product->getCategory());
+        self::assertInstanceOf(\DateTime::class, $product->getRegisteredDate());
+        self::assertInstanceOf(\DateTime::class, $product->getExpiredDate());
+    }
 }

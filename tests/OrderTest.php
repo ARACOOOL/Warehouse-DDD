@@ -180,4 +180,45 @@ class OrderTest extends TestCase
         $order->removeProduct($product);
         self::assertCount(1, $order->getProducts());
     }
+
+    public function testOrderGetters()
+    {
+        $order = new Order(
+            new Id('test'),
+            new Customer(new Id(Uuid::uuid4()), 'test', new Address('test', 'test', 'test', 123)),
+            [],
+            new \DateTime(),
+            new \DateTime('yesterday'),
+            new Status(Status::STATUS_OPEN)
+        );
+
+        self::assertInstanceOf(Customer::class, $order->getCustomer());
+        self::assertInstanceOf(\DateTime::class, $order->getCreatedAt());
+        self::assertInstanceOf(Id::class, $order->getID());
+    }
+
+    public function testIncrementingOfCountOfProduct()
+    {
+        $order = new Order(
+            new Id('test'),
+            new Customer(new Id(Uuid::uuid4()), 'test', new Address('test', 'test', 'test', 123)),
+            [],
+            new \DateTime(),
+            new \DateTime('yesterday'),
+            new Status(Status::STATUS_OPEN)
+        );
+
+        $product = new Product(
+            new ProductId(Uuid::uuid4()),
+            'test title',
+            123,
+            'test category',
+            new \DateTime(),
+            new \DateTime('tomorrow')
+        );
+
+        $order->addProduct($product);
+        $order->addProduct($product);
+        self::assertEquals(2, $order->getCountOfProduct($product->getID()));
+    }
 }

@@ -10,19 +10,16 @@ use Warehouse\Domain\Invoice\Invoice;
 use Warehouse\Domain\Invoice\ObjectValues\Status as InvoiceStatus;
 use Warehouse\Domain\ObjectValues\Id;
 use Warehouse\Domain\ObjectValues\Money;
-use Warehouse\Domain\Order\Events\OrderShipped;
-use Warehouse\Domain\Order\ObjectValues\Status;
-use Warehouse\Domain\Order\Order;
-use Warehouse\Domain\Product\Events\ProductIsNotAvailableEvent;
-use Warehouse\Domain\Product\ObjectValues\ProductId;
-use Warehouse\Domain\Product\Product;
-use Warehouse\Domain\Product\ProductsContainer;
-use Warehouse\Domain\Product\Repositories\ProductsRepositoryInterface;
+use Warehouse\Domain\Order\{
+    Events\OrderShipped, ObjectValues\Status, Order
+};
+use Warehouse\Domain\Product\{
+    Events\ProductIsNotAvailableEvent, ObjectValues\ProductId, Product, ProductsContainer, Repositories\ProductsRepositoryInterface
+};
 use Warehouse\Domain\Repository\PurchasesRepositoryInterface;
-use Warehouse\Domain\Warehouse\Events\OutgoingPurchaseEvent;
-use Warehouse\Domain\Warehouse\Events\ProductsReturnedByCustomerEvent;
-use Warehouse\Domain\Warehouse\Events\ReturnProductsToSupplierEvent;
-use Warehouse\Domain\Warehouse\Warehouse;
+use Warehouse\Domain\Warehouse\{
+    Events\OutgoingPurchaseEvent, Events\ProductsReturnedByCustomerEvent, Events\ReturnProductsToSupplierEvent, Warehouse
+};
 
 /**
  * Class WareHouseTest
