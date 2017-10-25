@@ -30,14 +30,28 @@ class InvoiceTest extends TestCase
         $this->expectException(\InvalidArgumentException::class);
         $this->expectExceptionMessage('Invalid status of invoice');
 
-        new Invoice(
+        new InvoiceStatus(4);
+    }
+
+    /**
+     *
+     */
+    public function testInvoiceGetters()
+    {
+        $invoice = new Invoice(
             new Id('test'),
             $this->createMock(Order::class),
             [],
-            new InvoiceStatus(4),
+            new InvoiceStatus(InvoiceStatus::STATUS_OPENED),
             new \DateTime(),
             new \DateTime()
         );
+
+        self::assertInstanceOf(Id::class, $invoice->getID());
+        self::assertInstanceOf(Id::class, $invoice->getOrderId());
+        self::assertInstanceOf(InvoiceStatus::class, $invoice->getStatus());
+        self::assertInstanceOf(\DateTime::class, $invoice->getCreatedAt());
+        self::assertInstanceOf(\DateTime::class, $invoice->getShippedAt());
     }
 
     /**
@@ -46,9 +60,9 @@ class InvoiceTest extends TestCase
     public function testInvoiceCreation(): void
     {
         $invoice = Invoice::create($this->createMock(Order::class), []);
-        $invoice->setCalculator(new TotalPriceCalculator());
-
         self::assertInstanceOf(Invoice::class, $invoice);
+
+        $invoice->setCalculator(new TotalPriceCalculator());
         self::assertEquals(new InvoiceStatus(InvoiceStatus::STATUS_OPENED), $invoice->getStatus());
     }
 
