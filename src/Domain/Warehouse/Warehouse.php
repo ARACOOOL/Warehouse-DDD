@@ -135,11 +135,12 @@ final class Warehouse
 
     /**
      * @param Product[] $products
+     * @param Customer $customer
      */
-    public function acceptReturnedProducts(array $products): void
+    public function acceptReturnedProducts(array $products, Customer $customer): void
     {
         $this->placeProducts($products);
-        $this->eventManager->dispatch(new ProductsReturnedByCustomerEvent($products));
+        $this->eventManager->dispatch(new ProductsReturnedByCustomerEvent($products, $customer));
     }
 
     /**

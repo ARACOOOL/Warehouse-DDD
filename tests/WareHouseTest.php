@@ -5,6 +5,7 @@ namespace tests;
 use PHPUnit\Framework\TestCase;
 use Ramsey\Uuid\Uuid;
 use Warehouse\Domain\Customer\Customer;
+use Warehouse\Domain\Customer\ObjectValues\Address;
 use Warehouse\Domain\Event\EventsManagerInterface;
 use Warehouse\Domain\Invoice\Invoice;
 use Warehouse\Domain\Invoice\ObjectValues\Status as InvoiceStatus;
@@ -257,7 +258,7 @@ class WareHouseTest extends TestCase
             $eventManager
         );
 
-        $warehouse->acceptReturnedProducts([$product, $product2]);
+        $warehouse->acceptReturnedProducts([$product, $product2], new Customer(new Id('test'), 'test name', new Address('test', 'test', 'test', 19999)));
     }
 
     public function testSendOrder()
