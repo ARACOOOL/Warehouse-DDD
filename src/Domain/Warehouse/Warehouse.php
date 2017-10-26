@@ -174,7 +174,7 @@ final class Warehouse
      */
     public function receiveMoney(Invoice $invoice, Money $money): void
     {
-        $this->purchasesRepository->outgoing($invoice);
+        $this->purchasesRepository->outgoing($invoice, $money);
         $this->eventManager->dispatch(new OutgoingPurchaseEvent($invoice));
     }
 }

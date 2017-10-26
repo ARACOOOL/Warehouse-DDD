@@ -112,7 +112,8 @@ class WareHouseTest extends TestCase
             ->with($this->isInstanceOf(OutgoingPurchaseEvent::class));
         $purchases = $this->createMock(PurchasesRepositoryInterface::class);
         $purchases->expects(self::once())
-            ->method('outgoing');
+            ->method('outgoing')
+            ->with($this->isInstanceOf(Invoice::class), $this->isInstanceOf(Money::class));
         $warehouse = new Warehouse(
             $this->createMock(ProductsRepositoryInterface::class),
             $purchases,
@@ -258,7 +259,8 @@ class WareHouseTest extends TestCase
             $eventManager
         );
 
-        $warehouse->acceptReturnedProducts([$product, $product2], new Customer(new Id('test'), 'test name', new Address('test', 'test', 'test', 19999)));
+        $warehouse->acceptReturnedProducts([$product, $product2],
+            new Customer(new Id('test'), 'test name', new Address('test', 'test', 'test', 19999)));
     }
 
     public function testSendOrder()
